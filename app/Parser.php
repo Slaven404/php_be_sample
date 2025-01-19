@@ -72,8 +72,13 @@ class Parser
 
     private function formatPrice($price)
     {
-        $formatter = new \NumberFormatter('de_DE', \NumberFormatter::CURRENCY);
-        return $formatter->formatCurrency($price, 'EUR');
+        if (class_exists('NumberFormatter')) {
+            $locale = 'de_DE';
+            $formatter = new \NumberFormatter($locale, \NumberFormatter::CURRENCY);
+            return $formatter->formatCurrency($price, 'EUR');
+        } else {
+            return number_format($price, 2, ',', '.') . ' €';
+        }
 
     }
 
