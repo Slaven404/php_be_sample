@@ -11,24 +11,15 @@ $productController = new ProductController();
 
 // Define routes
 $router->get('/', function () {
-    echo 'Test';
+    echo 'Live!';
 });
 
 $router->get('/products', function () use ($productController) {
     $result = $productController->getAllProducts();
+
     header('Content-Type: application/json');
-    $data = json_encode($result);
-    echo $data;
+    echo json_encode($result);
 });
-
-$router->get('/product/{id}', function (int $id) use ($productController) {
-
-    $result = $productController->getByIdProducts($id);
-    header('Content-Type: application/json');
-    $data = json_encode($result);
-    echo $data;
-});
-
 
 $router->get('/products/search', function () use ($productController) {
     $limit = $_GET['limit'] ?? 10;
@@ -37,11 +28,21 @@ $router->get('/products/search', function () use ($productController) {
     $order = $_GET['order'] ?? 'asc';
 
     $result = $productController->searchProducts($limit, $skip, $sortBy, $order);
-    header('Content-Type: application/json');
-    $data = json_encode($result);
 
-    echo $data;
+    header('Content-Type: application/json');
+    echo json_encode($result);
+
 });
+
+$router->get('/products/{id}', function (int $id) use ($productController) {
+    $result = $productController->getByIdProducts($id);
+
+    header('Content-Type: application/json');
+    echo json_encode($result);
+});
+
+
+
 
 
 // Run it!
