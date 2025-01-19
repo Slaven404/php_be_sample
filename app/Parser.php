@@ -8,30 +8,30 @@ class Parser
     {
 
         if (!isset($response['products'], $response['total'], $response['limit'], $response['skip'])) {
-            [];
+            return $response;
         }
 
-        if (is_array($response) && isset($response['products'])) {
-            $meta = [
-                "total_pages" => ceil($response['total'] / $response['limit']),
-                "page" => $response['skip'] + 1,
-                "per_page" => $response['limit'],
-            ];
+        $meta = [
+            "total_pages" => ceil($response['total'] / $response['limit']),
+            "page" => $response['skip'] + 1,
+            "per_page" => $response['limit'],
+        ];
 
+        $data = array_map(function ($product) {
+            return $this->mapProducts($product);
 
-            $data = array_map(function ($product) {
-                return $this->mapProducts($product);
+        }, $response['products']);
 
-            }, $response['products']);
+        return ["data" => $data, "meta" => $meta];
 
-
-            return ["data" => $data, "meta" => $meta];
-        }
-        return [];
     }
 
     public function parseProduct($product)
     {
+
+        if (!isset($product['id']))
+            return $product;
+
         return [
             'id' => $product['id'] ?? null,
             'title' => $product['title'] ?? '',

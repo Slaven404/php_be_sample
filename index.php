@@ -5,7 +5,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use Bramus\Router\Router;
 use App\Controllers\ProductController;
-// Create Router instance
+
 $router = new Router();
 $productController = new ProductController();
 

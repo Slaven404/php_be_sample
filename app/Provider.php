@@ -24,9 +24,10 @@ class Provider
         try {
             $response = $this->client->request('GET', 'products');
             $data = json_decode($response->getBody(), true);
+
             return $data;
 
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return ['error' => $exception->getMessage()];
         }
     }
@@ -36,9 +37,10 @@ class Provider
         try {
             $response = $this->client->request('GET', "products/{$id}");
             $data = json_decode($response->getBody(), true);
+
             return $data;
 
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return ['error' => $exception->getMessage()];
         }
     }
@@ -67,7 +69,7 @@ class Provider
 
             return $data;
 
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return ['error' => $exception->getMessage()];
         }
     }
